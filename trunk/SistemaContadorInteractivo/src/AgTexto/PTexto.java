@@ -12,5 +12,6 @@ public class PTexto extends JTextFieldValidator {
 		this.setText(String.valueOf(abstraccion.getValor()));
 		this.setFont(new java.awt.Font("Bodoni MT Poster Compressed",1,72));
 		this.setTipoCaracteresPermitidos(JTextFieldValidator.SOLO_NUMEROS);
+		this.setMaximaLongitud(2);
 	}
 }
