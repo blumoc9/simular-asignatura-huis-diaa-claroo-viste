@@ -60,18 +60,18 @@ public class CSistema implements Agente{
 	}
 
 	@Override
-	public void Recibir_Notificacion(Agente agente,Notificacion notificacion) {
-		Comunicar_Cambios(agente,notificacion);
+	public void Recibir(Notificacion notificacion ,Agente emisor) {
+		Comunicar_Cambios(emisor,notificacion);
 	}
 
 	private void Comunicar_Cambios(Agente agente,Notificacion notificacion) {
 		for(int i=0;i<this.subordinados.size();i++){
-			Enviar_Notificacion(this.subordinados.get(i), notificacion);
+			Enviar(notificacion,this.subordinados.get(i));
 		}
 	}
 
 	@Override
-	public void Enviar_Notificacion(Agente agente,Notificacion notificacion) {
-		agente.Recibir_Notificacion(this, notificacion);
+	public void Enviar(Notificacion notificacion,Agente receptor) {
+		receptor.Recibir(notificacion,this );
 	}
 }

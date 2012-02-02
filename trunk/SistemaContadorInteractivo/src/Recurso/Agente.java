@@ -1,6 +1,6 @@
 package Recurso;
 
 public interface Agente {
-	public void Recibir_Notificacion(Agente agente,Notificacion solicitud);
-	public void Enviar_Notificacion(Agente agente,Notificacion solicitud);
+	public void Recibir(Notificacion notificacion,Agente eminsor);
+	public void Enviar(Notificacion notificacion,Agente receptor);
 }

@@ -42,14 +42,14 @@ public class CTexto implements Agente {
 	}
 	private void PocisionarContador() {
 		if(Validar_Pocisionar()){
-			Notificacion solicitud = new Notificacion(Notificacion.POCISIONAR);
+			Notificacion notificacion = new Notificacion(Notificacion.POCISIONAR);
 			if (!presentacion.getText().equals("")){
-				solicitud.setNueva_posicion(Integer.valueOf(this.presentacion.getText()));
+				notificacion.setNueva_posicion(Integer.valueOf(this.presentacion.getText()));
 			}else{
-				solicitud.setNueva_posicion(0);
+				notificacion.setNueva_posicion(0);
 			}
-			this.abstraccion.setValor(solicitud.getNueva_posicion());
-			Enviar_Notificacion(this.supervisor, solicitud);
+			this.abstraccion.setValor(notificacion.getNueva_posicion());
+			Enviar(notificacion,this.supervisor);
 		}else{
 			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
 		}
@@ -62,7 +62,7 @@ public class CTexto implements Agente {
 		}
 	}
 	@Override
-	public void Recibir_Notificacion(Agente agente, Notificacion notificacion) {
+	public void Recibir(Notificacion notificacion,Agente emisor) {
 		switch (notificacion.getTipo()) {
 			case Notificacion.DECREMENTAR:Decrementar();break;
 			case Notificacion.INCREMENTAR:Incremenrar();break;
@@ -94,8 +94,8 @@ public class CTexto implements Agente {
 		}
 	}
 	@Override
-	public void Enviar_Notificacion(Agente agente, Notificacion notificacion) {
-		agente.Recibir_Notificacion(this, notificacion);
+	public void Enviar(Notificacion notificacion,Agente receptor ) {
+		receptor.Recibir( notificacion,this);
 	}
 	public ATexto getAbstraccion() {
 		return abstraccion;

@@ -44,7 +44,7 @@ public class CScrollbar implements Agente{
 			notificacion.setTipo(Notificacion.TRACK);
 			notificacion.setNueva_posicion(this.dibujo.getValue());
 		}
-		Enviar_Notificacion(this.supervisor,notificacion);
+		Enviar(notificacion,this.supervisor);
 	}
 
 	public PScrollbar getDibujo() {
@@ -64,7 +64,7 @@ public class CScrollbar implements Agente{
 	}
 
 	@Override
-	public void Recibir_Notificacion(Agente agente,Notificacion notificacion) {
+	public void Recibir(Notificacion notificacion,Agente emisor) {
 		if(notificacion.getTipo()==Notificacion.INCREMENTAR){
 			Incrementar();
 		}else if (notificacion.getTipo()==Notificacion.DECREMENTAR){
@@ -96,7 +96,7 @@ public class CScrollbar implements Agente{
 		}
 	}
 	@Override
-	public void Enviar_Notificacion(Agente agente,Notificacion notificacion) {
-		agente.Recibir_Notificacion(this,notificacion);
+	public void Enviar(Notificacion notificacion,Agente receptor) {
+		receptor.Recibir(notificacion,this);
 	}
 }
