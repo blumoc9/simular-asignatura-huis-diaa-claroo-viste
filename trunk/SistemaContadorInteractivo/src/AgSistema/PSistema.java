@@ -1,7 +1,10 @@
 package AgSistema;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import javax.swing.WindowConstants;
 
@@ -20,7 +23,6 @@ import javax.swing.WindowConstants;
 */
 public class PSistema extends javax.swing.JFrame {
 	private JPanel lienzo;
-
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
@@ -35,7 +37,6 @@ public class PSistema extends javax.swing.JFrame {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Sistema Contador Interactivo");
 			getContentPane().setBackground(new java.awt.Color(173,216,230));
-			this.setResizable(false);
 			{
 				lienzo = new JPanel();
 				getContentPane().add(lienzo, BorderLayout.NORTH);
@@ -44,16 +45,13 @@ public class PSistema extends javax.swing.JFrame {
 				lienzo.setBackground(new java.awt.Color(173,216,230));
 			}
 			pack();
-			this.setSize(398, 300);
+			this.setSize(402, 322);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
 		}
 	}
-
 	public JPanel getLienzo() {
 		return lienzo;
 	}
-	
-	
 }

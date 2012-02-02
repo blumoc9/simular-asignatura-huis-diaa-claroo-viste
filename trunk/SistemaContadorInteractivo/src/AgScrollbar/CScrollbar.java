@@ -4,7 +4,7 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
 import Recurso.Agente;
-import Recurso.Solicitud;
+import Recurso.Notificacion;
 
 public class CScrollbar implements Agente{
 	private PScrollbar dibujo;
@@ -29,19 +29,19 @@ public class CScrollbar implements Agente{
 	}
 	
 	public void EnviarAccion(AdjustmentEvent accion){
-		Solicitud solicitud = new Solicitud();
+		Notificacion notificacion = new Notificacion();
 		if(accion.getAdjustmentType()==accion.UNIT_INCREMENT){
-			solicitud.setTipo(Solicitud.INCREMENTAR);
+			notificacion.setTipo(Notificacion.INCREMENTAR);
 		}else if (accion.getAdjustmentType()==accion.UNIT_DECREMENT){
-			solicitud.setTipo(Solicitud.DECREMENTAR);
+			notificacion.setTipo(Notificacion.DECREMENTAR);
 		}else if (accion.getAdjustmentType()==accion.BLOCK_DECREMENT){
-			solicitud.setTipo(Solicitud.DECREMENTAR_BLOQUE);
-			solicitud.setNueva_posicion(this.dibujo.getValue());
+			notificacion.setTipo(Notificacion.DECREMENTAR_BLOQUE);
+			notificacion.setNueva_posicion(this.dibujo.getValue());
 		}else if (accion.getAdjustmentType()==accion.BLOCK_INCREMENT){
-			solicitud.setTipo(Solicitud.INCREMENTAR_BLOQUE);
-			solicitud.setNueva_posicion(this.dibujo.getValue());
+			notificacion.setTipo(Notificacion.INCREMENTAR_BLOQUE);
+			notificacion.setNueva_posicion(this.dibujo.getValue());
 		}
-		Enviar_Solicitud(this.supervisor,solicitud);
+		Enviar_Notificacion(this.supervisor,notificacion);
 	}
 
 	public PScrollbar getDibujo() {
@@ -61,15 +61,15 @@ public class CScrollbar implements Agente{
 	}
 
 	@Override
-	public void Recibir_Solitud(Agente agente,Solicitud solicitud) {
-		if(solicitud.getTipo()==Solicitud.INCREMENTAR){
+	public void Recibir_Notificacion(Agente agente,Notificacion notificacion) {
+		if(notificacion.getTipo()==Notificacion.INCREMENTAR){
 			Incrementar();
-		}else if (solicitud.getTipo()==Solicitud.DECREMENTAR){
+		}else if (notificacion.getTipo()==Notificacion.DECREMENTAR){
 			Decrementar();
-		}else if ((solicitud.getTipo()==Solicitud.DECREMENTAR_BLOQUE)||(solicitud.getTipo()==Solicitud.INCREMENTAR_BLOQUE)){
-			Posicione(solicitud.getNueva_posicion());
-		}else if (solicitud.getTipo()==Solicitud.POCISIONAR){
-			Posicione(solicitud.getNueva_posicion());
+		}else if ((notificacion.getTipo()==Notificacion.DECREMENTAR_BLOQUE)||(notificacion.getTipo()==Notificacion.INCREMENTAR_BLOQUE)){
+			Posicione(notificacion.getNueva_posicion());
+		}else if (notificacion.getTipo()==Notificacion.POCISIONAR){
+			Posicione(notificacion.getNueva_posicion());
 		}
 	}
 
@@ -92,8 +92,8 @@ public class CScrollbar implements Agente{
 	}
 
 	@Override
-	public void Enviar_Solicitud(Agente agente,Solicitud solicitud) {
-		agente.Recibir_Solitud(this,solicitud);
+	public void Enviar_Notificacion(Agente agente,Notificacion notificacion) {
+		agente.Recibir_Notificacion(this,notificacion);
 	}
 
 	

@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import Recurso.Agente;
-import Recurso.Solicitud;
+import Recurso.Notificacion;
 
 public class CTexto implements Agente {
 	private ATexto abstraccion;
@@ -25,12 +25,12 @@ public class CTexto implements Agente {
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 				if(arg0.getKeyChar()==arg0.VK_ENTER){
-					PocisionarContador();
+					//PocisionarContador();
 				}
 			}
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				//PocisionarContador();
+				PocisionarContador();
 			}
 			
 			@Override
@@ -42,10 +42,10 @@ public class CTexto implements Agente {
 	}
 	private void PocisionarContador() {
 		if(Validar_Pocisionar()){
-			Solicitud solicitud = new Solicitud(Solicitud.POCISIONAR);
+			Notificacion solicitud = new Notificacion(Notificacion.POCISIONAR);
 			solicitud.setNueva_posicion(Integer.valueOf(this.presentacion.getText()));
 			this.abstraccion.setValor(Integer.valueOf(this.presentacion.getText()));
-			Enviar_Solicitud(this.supervisor, solicitud);
+			Enviar_Notificacion(this.supervisor, solicitud);
 		}else{
 			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
 		}
@@ -58,12 +58,12 @@ public class CTexto implements Agente {
 		}
 	}
 	@Override
-	public void Recibir_Solitud(Agente agente, Solicitud solicitud) {
-		switch (solicitud.getTipo()) {
-			case Solicitud.DECREMENTAR:Decrementar();break;
-			case Solicitud.INCREMENTAR:Incremenrar();break;
-			case Solicitud.INCREMENTAR_BLOQUE:Posicionar_Bloque(solicitud.getNueva_posicion());break;
-			case Solicitud.DECREMENTAR_BLOQUE:Posicionar_Bloque(solicitud.getNueva_posicion());break;
+	public void Recibir_Notificacion(Agente agente, Notificacion notificacion) {
+		switch (notificacion.getTipo()) {
+			case Notificacion.DECREMENTAR:Decrementar();break;
+			case Notificacion.INCREMENTAR:Incremenrar();break;
+			case Notificacion.INCREMENTAR_BLOQUE:Posicionar_Bloque(notificacion.getNueva_posicion());break;
+			case Notificacion.DECREMENTAR_BLOQUE:Posicionar_Bloque(notificacion.getNueva_posicion());break;
 			default:break;
 		}
 	}
@@ -86,8 +86,8 @@ public class CTexto implements Agente {
 		}
 	}
 	@Override
-	public void Enviar_Solicitud(Agente agente, Solicitud solicitud) {
-		agente.Recibir_Solitud(this, solicitud);
+	public void Enviar_Notificacion(Agente agente, Notificacion notificacion) {
+		agente.Recibir_Notificacion(this, notificacion);
 	}
 	public ATexto getAbstraccion() {
 		return abstraccion;
