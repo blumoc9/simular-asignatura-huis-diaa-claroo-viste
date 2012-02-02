@@ -5,12 +5,8 @@
 // Colmenarez, Fernando CI: 18.923.926
 package AgSistema;
 
-import Recurso.Intervalo;
 
-public class ASistema extends Intervalo{
+public class ASistema{
 
-	public ASistema(int min, int val, int max) {
-		super(min, val, max);
-	}
 
 }

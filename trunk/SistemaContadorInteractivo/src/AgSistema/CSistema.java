@@ -24,15 +24,12 @@ public class CSistema implements Agente{
 	
 	public CSistema() {
 		super();
-		abstraccion = new ASistema(0, 10, 20);
+		abstraccion = new ASistema();
 		presentacion = new PSistema();
 		AgregarAgentes();
 		MostrarPresentacion();
 	}
 	
-	public void Crear_Capturador_Datos_Invtervalo(){
-		
-	}
 
 	private void MostrarPresentacion() {
 		this.presentacion.setVisible(true);
