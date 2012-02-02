@@ -37,6 +37,7 @@ public class PSistema extends javax.swing.JFrame {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Sistema Contador Interactivo");
 			getContentPane().setBackground(new java.awt.Color(173,216,230));
+			this.setResizable(false);
 			{
 				lienzo = new JPanel();
 				getContentPane().add(lienzo, BorderLayout.NORTH);
@@ -45,7 +46,7 @@ public class PSistema extends javax.swing.JFrame {
 				lienzo.setBackground(new java.awt.Color(173,216,230));
 			}
 			pack();
-			this.setSize(402, 322);
+			this.setSize(406, 298);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();

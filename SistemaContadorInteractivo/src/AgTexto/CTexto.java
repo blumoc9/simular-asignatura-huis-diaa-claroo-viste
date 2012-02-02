@@ -43,8 +43,12 @@ public class CTexto implements Agente {
 	private void PocisionarContador() {
 		if(Validar_Pocisionar()){
 			Notificacion solicitud = new Notificacion(Notificacion.POCISIONAR);
-			solicitud.setNueva_posicion(Integer.valueOf(this.presentacion.getText()));
-			this.abstraccion.setValor(Integer.valueOf(this.presentacion.getText()));
+			if (!presentacion.getText().equals("")){
+				solicitud.setNueva_posicion(Integer.valueOf(this.presentacion.getText()));
+			}else{
+				solicitud.setNueva_posicion(0);
+			}
+			this.abstraccion.setValor(solicitud.getNueva_posicion());
 			Enviar_Notificacion(this.supervisor, solicitud);
 		}else{
 			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
@@ -54,7 +58,7 @@ public class CTexto implements Agente {
 		if(!presentacion.getText().equals("")){
 			return (this.abstraccion.getMinimo()<=Integer.valueOf(this.presentacion.getText()))&&(Integer.valueOf(this.presentacion.getText())<this.abstraccion.getMaximo());
 		}else{
-			return false;
+			return true;
 		}
 	}
 	@Override
@@ -64,10 +68,14 @@ public class CTexto implements Agente {
 			case Notificacion.INCREMENTAR:Incremenrar();break;
 			case Notificacion.INCREMENTAR_BLOQUE:Posicionar_Bloque(notificacion.getNueva_posicion());break;
 			case Notificacion.DECREMENTAR_BLOQUE:Posicionar_Bloque(notificacion.getNueva_posicion());break;
+			case Notificacion.TRACK:Posicionar_Track(notificacion.getNueva_posicion());break;
 			default:break;
 		}
 	}
 
+	private void Posicionar_Track(int nueva_posicion) {
+		Posicionar_Bloque(nueva_posicion);
+	}
 	private void Posicionar_Bloque(int nueva_posicion) {
 		if((this.abstraccion.getMinimo()<=nueva_posicion)&&(nueva_posicion<=this.abstraccion.getMaximo())){
 			this.presentacion.setText(String.valueOf(nueva_posicion));
