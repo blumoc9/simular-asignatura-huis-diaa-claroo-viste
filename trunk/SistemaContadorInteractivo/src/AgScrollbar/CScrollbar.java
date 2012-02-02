@@ -40,6 +40,9 @@ public class CScrollbar implements Agente{
 		}else if (accion.getAdjustmentType()==accion.BLOCK_INCREMENT){
 			notificacion.setTipo(Notificacion.INCREMENTAR_BLOQUE);
 			notificacion.setNueva_posicion(this.dibujo.getValue());
+		}else if (accion.getAdjustmentType()==accion.TRACK){
+			notificacion.setTipo(Notificacion.TRACK);
+			notificacion.setNueva_posicion(this.dibujo.getValue());
 		}
 		Enviar_Notificacion(this.supervisor,notificacion);
 	}
@@ -70,6 +73,8 @@ public class CScrollbar implements Agente{
 			Posicione(notificacion.getNueva_posicion());
 		}else if (notificacion.getTipo()==Notificacion.POCISIONAR){
 			Posicione(notificacion.getNueva_posicion());
+		}else if(notificacion.getTipo()==Notificacion.TRACK){
+			Posicione(notificacion.getNueva_posicion());
 		}
 	}
 
@@ -90,11 +95,8 @@ public class CScrollbar implements Agente{
 			this.abstracion.incrementar();
 		}
 	}
-
 	@Override
 	public void Enviar_Notificacion(Agente agente,Notificacion notificacion) {
 		agente.Recibir_Notificacion(this,notificacion);
 	}
-
-	
 }
