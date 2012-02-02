@@ -1,6 +1,6 @@
 package Recurso;
 
-public class Solicitud {
+public class Notificacion {
 	private int tipo;
 	private int nueva_posicion;
 	public static final int INCREMENTAR=1;
@@ -10,12 +10,12 @@ public class Solicitud {
 	public static final int DECREMENTAR_BLOQUE=4;
 	public static final int POCISIONAR=9;
 	
-	public Solicitud(int tipo) {
+	public Notificacion(int tipo) {
 		super();
 		this.tipo = tipo;
 	}
 
-	public Solicitud() {
+	public Notificacion() {
 		super();
 	}
 

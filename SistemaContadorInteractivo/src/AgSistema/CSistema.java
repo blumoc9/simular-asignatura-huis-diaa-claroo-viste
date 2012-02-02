@@ -4,7 +4,7 @@ import java.awt.Scrollbar;
 import java.util.Vector;
 
 import Recurso.Agente;
-import Recurso.Solicitud;
+import Recurso.Notificacion;
 
 import AgScrollbar.CScrollbar;
 import AgTexto.CTexto;
@@ -19,10 +19,14 @@ public class CSistema implements Agente{
 	
 	public CSistema() {
 		super();
-		abstraccion = new ASistema();
+		abstraccion = new ASistema(0, 10, 20);
 		presentacion = new PSistema();
 		AgregarAgentes();
 		MostrarPresentacion();
+	}
+	
+	public void Crear_Capturador_Datos_Invtervalo(){
+		
 	}
 
 	private void MostrarPresentacion() {
@@ -45,8 +49,6 @@ public class CSistema implements Agente{
 		scrollbar2.getDibujo().setBounds(this.getPresentacion().getLienzo().getWidth()-60, 10, 50, this.getPresentacion().getLienzo().getHeight()-20);
 		presentacion.getLienzo().add(texto.getPresentacion());
 		texto.getPresentacion().setBounds(10, 70, scrollbar.getDibujo().getWidth(), scrollbar2.getDibujo().getHeight()-60);
-	//	scrollbar2.getDibujo().setBounds(10, 80, 200, 50);
-		
 	}
 
 	public ASistema getAbstraccion() {
@@ -58,18 +60,18 @@ public class CSistema implements Agente{
 	}
 
 	@Override
-	public void Recibir_Solitud(Agente agente,Solicitud solicitud) {
-		Comunicar_Cambios(agente,solicitud);
+	public void Recibir_Notificacion(Agente agente,Notificacion notificacion) {
+		Comunicar_Cambios(agente,notificacion);
 	}
 
-	private void Comunicar_Cambios(Agente agente,Solicitud solicitud) {
+	private void Comunicar_Cambios(Agente agente,Notificacion notificacion) {
 		for(int i=0;i<this.subordinados.size();i++){
-			Enviar_Solicitud(this.subordinados.get(i), solicitud);
+			Enviar_Notificacion(this.subordinados.get(i), notificacion);
 		}
 	}
 
 	@Override
-	public void Enviar_Solicitud(Agente agente,Solicitud solicitud) {
-		agente.Recibir_Solitud(this, solicitud);
+	public void Enviar_Notificacion(Agente agente,Notificacion notificacion) {
+		agente.Recibir_Notificacion(this, notificacion);
 	}
 }
