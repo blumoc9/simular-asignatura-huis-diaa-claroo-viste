@@ -51,7 +51,11 @@ public class CTexto implements Agente {
 		}
 	}
 	private boolean Validar_Pocisionar() {
-		return (this.abstraccion.getMinimo()<=Integer.valueOf(this.presentacion.getText()))&&(Integer.valueOf(this.presentacion.getText())<this.abstraccion.getMaximo());
+		if(!presentacion.getText().equals("")){
+			return (this.abstraccion.getMinimo()<=Integer.valueOf(this.presentacion.getText()))&&(Integer.valueOf(this.presentacion.getText())<this.abstraccion.getMaximo());
+		}else{
+			return false;
+		}
 	}
 	@Override
 	public void Recibir_Solitud(Agente agente, Solicitud solicitud) {
