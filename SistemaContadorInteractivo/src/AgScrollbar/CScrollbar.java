@@ -3,10 +3,10 @@
 // Paez, Maira CI: 19.618.874
 // Arteaga, Luis CI: 19.696.160
 // Colmenarez, Fernando CI: 18.923.926 
+
 package AgScrollbar;
 
 import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 
 import Recurso.Agente;
 import Recurso.Notificacion;
@@ -19,18 +19,8 @@ public class CScrollbar implements Agente{
 	public CScrollbar(int valor,int max,int min,Agente supervisor) {
 		super();
 		this.abstracion = new AScrollbar(min,valor,max);
-		this.dibujo = new PScrollbar(abstracion);
+		this.dibujo = new PScrollbar(abstracion,this);
 		this.supervisor = supervisor;
-		Escuchador();
-	}
-	
-	public void Escuchador(){
-		this.dibujo.addAdjustmentListener(new AdjustmentListener() {
-			@Override
-			public void adjustmentValueChanged(AdjustmentEvent arg0) {
-				EnviarAccion(arg0);
-			}
-		});
 	}
 	
 	public void EnviarAccion(AdjustmentEvent accion){
@@ -50,6 +40,10 @@ public class CScrollbar implements Agente{
 			notificacion.setNueva_posicion(this.dibujo.getValue());
 		}
 		Enviar(notificacion,this.supervisor);
+	}
+	
+	public void Recibir_Evento(AdjustmentEvent accion){
+		EnviarAccion(accion);
 	}
 
 	public PScrollbar getDibujo() {

@@ -6,6 +6,7 @@
 package AgTexto;
 
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -20,31 +21,14 @@ public class CTexto implements Agente {
 	public CTexto(int min,int val,int max,Agente supervisor) {
 		super();
 		this.abstraccion = new ATexto(min, val, max);
-		this.presentacion = new PTexto(abstraccion);
+		this.presentacion = new PTexto(abstraccion,this);
 		this.supervisor = supervisor;
-		AgregarEscuchador();
 	}
-	private void AgregarEscuchador() {
-		this.presentacion.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				if(arg0.getKeyChar()==arg0.VK_ENTER){
-					//PocisionarContador();
-				}
-			}
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				PocisionarContador();
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+	
+	public void Recibir_Evento(KeyEvent accion){
+		PocisionarContador();
 	}
+	
 	private void PocisionarContador() {
 		if(Validar_Pocisionar()){
 			Notificacion notificacion = new Notificacion(Notificacion.POCISIONAR);

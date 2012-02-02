@@ -7,10 +7,23 @@ package AgScrollbar;
 
 import java.awt.Color;
 import java.awt.Scrollbar;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 
 public class PScrollbar extends Scrollbar{
-	public PScrollbar(AScrollbar abstraccion){
+	private CScrollbar controlador;
+	public PScrollbar(AScrollbar abstraccion,CScrollbar controlador){
 		super(HORIZONTAL, abstraccion.getValor(), 1, abstraccion.getMinimo(),abstraccion.getMaximo());
+		this.controlador=controlador;
 		this.setBackground(Color.WHITE);
+		this.addAdjustmentListener(new AdjustmentListener() {
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent arg0) {
+				Notificar_alControlador(arg0);
+			}
+		});
+	}
+	public void Notificar_alControlador(AdjustmentEvent evento) {
+		this.controlador.Recibir_Evento(evento);
 	}
 }
