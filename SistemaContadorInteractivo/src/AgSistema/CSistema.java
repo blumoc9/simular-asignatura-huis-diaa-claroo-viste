@@ -8,11 +8,10 @@ package AgSistema;
 import java.awt.Scrollbar;
 import java.util.Vector;
 
-import Recurso.Agente;
-import Recurso.Notificacion;
-
 import AgScrollbar.CScrollbar;
 import AgTexto.CTexto;
+import Recurso.Agente;
+import Recurso.Notificacion;
 
 public class CSistema implements Agente{
 	private ASistema abstraccion;
@@ -31,11 +30,6 @@ public class CSistema implements Agente{
 	}
 	
 
-	private void MostrarPresentacion() {
-		this.presentacion.setVisible(true);
-		this.presentacion.setLocationRelativeTo(null);
-	}
-
 	private void AgregarAgentes() {
 		this.subordinados = new Vector<Agente>();
 		scrollbar = new CScrollbar(10, 20, 0,this);
@@ -53,19 +47,6 @@ public class CSistema implements Agente{
 		texto.getPresentacion().setBounds(10, 70, scrollbar.getDibujo().getWidth(), scrollbar2.getDibujo().getHeight()-60);
 	}
 
-	public ASistema getAbstraccion() {
-		return abstraccion;
-	}
-
-	public PSistema getPresentacion() {
-		return presentacion;
-	}
-
-	@Override
-	public void Recibir(Notificacion notificacion ,Agente emisor) {
-		Comunicar_Cambios(emisor,notificacion);
-	}
-
 	private void Comunicar_Cambios(Agente agente,Notificacion notificacion) {
 		for(int i=0;i<this.subordinados.size();i++){
 			Enviar(notificacion,this.subordinados.get(i));
@@ -75,5 +56,23 @@ public class CSistema implements Agente{
 	@Override
 	public void Enviar(Notificacion notificacion,Agente receptor) {
 		receptor.Recibir(notificacion,this );
+	}
+
+	public ASistema getAbstraccion() {
+		return abstraccion;
+	}
+
+	public PSistema getPresentacion() {
+		return presentacion;
+	}
+
+	private void MostrarPresentacion() {
+		this.presentacion.setVisible(true);
+		this.presentacion.setLocationRelativeTo(null);
+	}
+
+	@Override
+	public void Recibir(Notificacion notificacion ,Agente emisor) {
+		Comunicar_Cambios(emisor,notificacion);
 	}
 }

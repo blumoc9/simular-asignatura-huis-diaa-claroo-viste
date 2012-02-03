@@ -15,25 +15,25 @@ public class Notificacion {
 	public static final int DECREMENTAR_BLOQUE=4;
 	public static final int POCISIONAR=9;
 	
+	public Notificacion() {
+		super();
+	}
+
 	public Notificacion(int tipo) {
 		super();
 		this.tipo = tipo;
-	}
-
-	public Notificacion() {
-		super();
 	}
 
 	public int getNueva_posicion() {
 		return nueva_posicion;
 	}
 
-	public void setNueva_posicion(int nueva_pocision) {
-		this.nueva_posicion = nueva_pocision;
-	}
-
 	public int getTipo() {
 		return tipo;
+	}
+
+	public void setNueva_posicion(int nueva_pocision) {
+		this.nueva_posicion = nueva_pocision;
 	}
 
 	public void setTipo(int tipo) {

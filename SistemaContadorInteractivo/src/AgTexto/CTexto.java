@@ -5,10 +5,7 @@
 // Colmenarez, Fernando CI: 18.923.926 
 package AgTexto;
 
-import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import Recurso.Agente;
 import Recurso.Notificacion;
@@ -25,10 +22,33 @@ public class CTexto implements Agente {
 		this.supervisor = supervisor;
 	}
 	
-	public void Recibir_Evento(KeyEvent accion){
-		PocisionarContador();
+	private void Decrementar() {
+		if(this.abstraccion.esDecrementable()){
+			this.abstraccion.decrementar();
+			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
+		}
 	}
 	
+	@Override
+	public void Enviar(Notificacion notificacion,Agente receptor ) {
+		receptor.Recibir( notificacion,this);
+	}
+	public ATexto getAbstraccion() {
+		return abstraccion;
+	}
+	public PTexto getPresentacion() {
+		return presentacion;
+	}
+
+	public Agente getSupervisor() {
+		return supervisor;
+	}
+	private void Incremenrar() {
+		if(this.abstraccion.esIncrementable()){
+			this.abstraccion.incrementar();
+			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
+		}
+	}
 	private void PocisionarContador() {
 		if(Validar_Pocisionar()){
 			Notificacion notificacion = new Notificacion(Notificacion.POCISIONAR);
@@ -43,12 +63,13 @@ public class CTexto implements Agente {
 			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
 		}
 	}
-	private boolean Validar_Pocisionar() {
-		if(!presentacion.getText().equals("")){
-			return (this.abstraccion.getMinimo()<=Integer.valueOf(this.presentacion.getText()))&&(Integer.valueOf(this.presentacion.getText())<this.abstraccion.getMaximo());
-		}else{
-			return true;
+	private void Posicionar_Bloque(int nueva_posicion) {
+		if((this.abstraccion.getMinimo()<=nueva_posicion)&&(nueva_posicion<=this.abstraccion.getMaximo())){
+			this.presentacion.setText(String.valueOf(nueva_posicion));
 		}
+	}
+	private void Posicionar_Track(int nueva_posicion) {
+		Posicionar_Bloque(nueva_posicion);
 	}
 	@Override
 	public void Recibir(Notificacion notificacion,Agente emisor) {
@@ -61,38 +82,14 @@ public class CTexto implements Agente {
 			default:break;
 		}
 	}
-
-	private void Posicionar_Track(int nueva_posicion) {
-		Posicionar_Bloque(nueva_posicion);
+	public void Recibir_Evento(KeyEvent accion){
+		PocisionarContador();
 	}
-	private void Posicionar_Bloque(int nueva_posicion) {
-		if((this.abstraccion.getMinimo()<=nueva_posicion)&&(nueva_posicion<=this.abstraccion.getMaximo())){
-			this.presentacion.setText(String.valueOf(nueva_posicion));
+	private boolean Validar_Pocisionar() {
+		if(!presentacion.getText().equals("")){
+			return (this.abstraccion.getMinimo()<=Integer.valueOf(this.presentacion.getText()))&&(Integer.valueOf(this.presentacion.getText())<this.abstraccion.getMaximo());
+		}else{
+			return true;
 		}
-	}
-	private void Incremenrar() {
-		if(this.abstraccion.esIncrementable()){
-			this.abstraccion.incrementar();
-			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
-		}
-	}
-	private void Decrementar() {
-		if(this.abstraccion.esDecrementable()){
-			this.abstraccion.decrementar();
-			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
-		}
-	}
-	@Override
-	public void Enviar(Notificacion notificacion,Agente receptor ) {
-		receptor.Recibir( notificacion,this);
-	}
-	public ATexto getAbstraccion() {
-		return abstraccion;
-	}
-	public PTexto getPresentacion() {
-		return presentacion;
-	}
-	public Agente getSupervisor() {
-		return supervisor;
 	}
 }

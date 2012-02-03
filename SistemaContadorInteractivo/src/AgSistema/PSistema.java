@@ -6,11 +6,7 @@
 package AgSistema;
 import java.awt.BorderLayout;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
 
 
@@ -37,6 +33,9 @@ public class PSistema extends javax.swing.JFrame {
 		initGUI();
 	}
 	
+	public JPanel getLienzo() {
+		return lienzo;
+	}
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -56,8 +55,5 @@ public class PSistema extends javax.swing.JFrame {
 		    //add your error handling code here
 			e.printStackTrace();
 		}
-	}
-	public JPanel getLienzo() {
-		return lienzo;
 	}
 }
