@@ -5,12 +5,8 @@
 // Colmenarez, Fernando CI: 18.923.926 
 package AgTexto;
 
-import java.awt.Font;
-import java.awt.event.AdjustmentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.JTextField;
 
 import bean.JTextFieldValidator;
 
@@ -25,7 +21,7 @@ public class PTexto extends JTextFieldValidator {
 		this.controlador=controlador;
 		this.addKeyListener(new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent arg0) {
+			public void keyPressed(KeyEvent arg0) {
 				// TODO Auto-generated method stub
 				
 			}
@@ -36,7 +32,7 @@ public class PTexto extends JTextFieldValidator {
 			}
 			
 			@Override
-			public void keyPressed(KeyEvent arg0) {
+			public void keyTyped(KeyEvent arg0) {
 				// TODO Auto-generated method stub
 				
 			}

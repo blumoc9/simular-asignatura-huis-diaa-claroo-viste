@@ -22,6 +22,18 @@ public class CScrollbar implements Agente{
 		this.supervisor = supervisor;
 	}
 	
+	private void Decrementar() {
+		if (abstracion.esDecrementable()){
+			this.dibujo.setValue(this.getAbstracion().getValor()-1);
+			this.abstracion.decrementar();
+		}
+	}
+	
+	@Override
+	public void Enviar(Notificacion notificacion,Agente receptor) {
+		receptor.Recibir(notificacion,this);
+	}
+
 	public void EnviarAccion(AdjustmentEvent accion){
 		Notificacion notificacion = new Notificacion();
 		if(accion.getAdjustmentType()==accion.UNIT_INCREMENT){
@@ -40,25 +52,24 @@ public class CScrollbar implements Agente{
 		}
 		Enviar(notificacion,this.supervisor);
 	}
-	
-	public void Recibir_Evento(AdjustmentEvent accion){
-		EnviarAccion(accion);
+
+	public AScrollbar getAbstracion() {
+		return abstracion;
 	}
 
 	public PScrollbar getDibujo() {
 		return dibujo;
 	}
 
-	public void setDibujo(PScrollbar dibujo) {
-		this.dibujo = dibujo;
+	private void Incrementar() {
+		if (abstracion.esIncrementable()){
+			this.dibujo.setValue(this.getAbstracion().getValor()+1);
+			this.abstracion.incrementar();
+		}
 	}
 
-	public AScrollbar getAbstracion() {
-		return abstracion;
-	}
-
-	public void setAbstracion(AScrollbar abstracion) {
-		this.abstracion = abstracion;
+	private void Posicione(int nueva_posicion) {
+		this.dibujo.setValue(nueva_posicion);
 	}
 
 	@Override
@@ -76,25 +87,14 @@ public class CScrollbar implements Agente{
 		}
 	}
 
-	private void Posicione(int nueva_posicion) {
-		this.dibujo.setValue(nueva_posicion);
+	public void Recibir_Evento(AdjustmentEvent accion){
+		EnviarAccion(accion);
 	}
 
-	private void Decrementar() {
-		if (abstracion.esDecrementable()){
-			this.dibujo.setValue(this.getAbstracion().getValor()-1);
-			this.abstracion.decrementar();
-		}
+	public void setAbstracion(AScrollbar abstracion) {
+		this.abstracion = abstracion;
 	}
-
-	private void Incrementar() {
-		if (abstracion.esIncrementable()){
-			this.dibujo.setValue(this.getAbstracion().getValor()+1);
-			this.abstracion.incrementar();
-		}
-	}
-	@Override
-	public void Enviar(Notificacion notificacion,Agente receptor) {
-		receptor.Recibir(notificacion,this);
+	public void setDibujo(PScrollbar dibujo) {
+		this.dibujo = dibujo;
 	}
 }
