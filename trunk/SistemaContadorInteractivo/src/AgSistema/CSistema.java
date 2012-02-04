@@ -7,7 +7,6 @@ package AgSistema;
 
 import java.awt.Scrollbar;
 import java.util.Vector;
-
 import AgScrollbar.CScrollbar;
 import AgTexto.CTexto;
 import Recurso.Agente;
@@ -29,7 +28,6 @@ public class CSistema implements Agente{
 		MostrarPresentacion();
 	}
 	
-
 	private void AgregarAgentes() {
 		this.subordinados = new Vector<Agente>();
 		scrollbar = new CScrollbar(10, 20, 0,this);

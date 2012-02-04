@@ -1,8 +1,3 @@
-//Integrantes:
-// Santana, Adriana CI: 18.801.197
-// Paez, Maria CI: 19.618.874
-// Arteaga, Luis CI: 19.696.160
-// Colmenarez, Fernando CI: 18.923.926 
 package AgScrollbar;
 
 import java.awt.event.AdjustmentEvent;
@@ -10,30 +5,68 @@ import java.awt.event.AdjustmentEvent;
 import Recurso.Agente;
 import Recurso.Notificacion;
 
+/** Clase Controladora para el Agente Scrollbar
+ *  esta clase contiene la presentacion y abstraccion del agente
+ *  ademas de un supervisor que puede ser cualquier objeto que implemente
+ *  la interface de agente creada en este proyecto
+ *
+ * 
+ * @author Elam Torres
+ * @author Santana, Adriana CI: 18.801.197
+ * @author Paez, Maria CI: 19.618.874
+ * @author Arteaga, Luis CI: 19.696.160
+ * @author Colmenarez, Fernando CI: 18.923.926 
+ * @version 1.2
+ */
+
 public class CScrollbar implements Agente{
 	private PScrollbar dibujo;
 	private AScrollbar abstracion;
 	private Agente supervisor;
-	
+	/**
+	 * @param valor Valor de inicializacion del intervalo
+	 * @param max Valor maximo que puede tomar el intervalo
+	 * @param min Valor minimo que puede tomar el intervalo
+	 * @param Agente Agente supervisos a quien responde el agente(CScrollbar)
+	 * @author Elam Torres
+	 * @author Adriana Santana
+	 */
 	public CScrollbar(int valor,int max,int min,Agente supervisor) {
 		super();
 		this.abstracion = new AScrollbar(min,valor,max);
 		this.dibujo = new PScrollbar(abstracion,this);
 		this.supervisor = supervisor;
 	}
-	
+	/**
+	 * Este metodo se encargar de hacer todo el proceso que implica decrementar
+	 * el valo del intervalo que posee la abstraccion del agente
+	 * 
+	 */
 	private void Decrementar() {
 		if (abstracion.esDecrementable()){
 			this.dibujo.setValue(this.getAbstracion().getValor()-1);
 			this.abstracion.decrementar();
 		}
 	}
-	
+	/**
+	 * Metodod abstracto que permite al agente enviar notificaciones de cambio
+	 * a otros agentes en el sistema
+	 * 
+	 * @param notificacion objeto que contiene informacion referente a la notificacion
+	 * como lo es el tipo de notificacion
+	 * @param receptor Agente quien se encargara de de recibir procesar y comunicar la 
+	 * notificacion al resto de sus agentes subordinados
+	 */
 	@Override
 	public void Enviar(Notificacion notificacion,Agente receptor) {
 		receptor.Recibir(notificacion,this);
 	}
-
+	/**
+	 * Metodo que permite realizar todo el proceso de envio de una 
+	 * notificacion a su agente supervisor
+	 * @param accion evento enviado por la presentacion al controlador para
+	 * que este lo procese
+	 */
 	public void EnviarAccion(AdjustmentEvent accion){
 		Notificacion notificacion = new Notificacion();
 		if(accion.getAdjustmentType()==accion.UNIT_INCREMENT){
@@ -52,11 +85,17 @@ public class CScrollbar implements Agente{
 		}
 		Enviar(notificacion,this.supervisor);
 	}
-
+	/**
+	 * Permite al controlador devolver la abstraccion del agente al cual el controla
+	 * @return objeto abstraccion del agente
+	 */
 	public AScrollbar getAbstracion() {
 		return abstracion;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public PScrollbar getDibujo() {
 		return dibujo;
 	}
