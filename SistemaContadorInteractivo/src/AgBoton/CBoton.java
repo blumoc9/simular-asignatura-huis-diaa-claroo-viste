@@ -40,6 +40,9 @@ public class CBoton implements Agente{
 		if (this.abstraccion.esDecrementable()){
 			this.abstraccion.decrementar();
 			System.out.println("Nuevo Valor: "+this.abstraccion.getValor());
+		}else{
+			System.out.println("No se pudo decrementar Boton...");
+			System.out.println("Valor Actual: "+this.abstraccion.getValor());
 		}
 		switch (this.tipo) {
 			case CBoton.BOTON_INCREMENTO:this.presentacion.setEnabled(true);break;
@@ -58,6 +61,9 @@ public class CBoton implements Agente{
 		if (this.abstraccion.esIncrementable()){
 			this.abstraccion.incrementar();
 			System.out.println("Nuevo valor: "+this.abstraccion.getValor());
+		}else{
+			System.out.println("No se pudo incrementar Boton: "+this);
+			System.out.println("Valor Actual: "+this.abstraccion.getValor());
 		}
 		switch (this.tipo) {
 			case CBoton.BOTON_INCREMENTO:
