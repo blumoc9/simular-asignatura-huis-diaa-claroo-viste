@@ -23,10 +23,13 @@ public class CTexto implements Agente {
 	}
 	
 	private void Decrementar() {
+		System.out.println("Tratando de Decrementar Texto: "+this);
 		if(this.abstraccion.esDecrementable()){
 			this.abstraccion.decrementar();
 			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
+			System.out.println("Nuevo valor: "+this.abstraccion.getValor());
 		}
+		System.out.println("");
 	}
 	
 	@Override
@@ -44,12 +47,16 @@ public class CTexto implements Agente {
 		return supervisor;
 	}
 	private void Incremenrar() {
+		System.out.println("Tratando de incrementar Texto: "+this);
 		if(this.abstraccion.esIncrementable()){
 			this.abstraccion.incrementar();
 			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
+			System.out.println("Nuevo Valor: "+this.abstraccion.getValor());
 		}
+		System.out.println("");
 	}
 	private void PocisionarContador() {
+		System.out.println("Tratando de pocisionar Texto: "+this);
 		if(Validar_Pocisionar()){
 			Notificacion notificacion = new Notificacion(Notificacion.POCISIONAR);
 			if (!presentacion.getText().equals("")){
@@ -58,15 +65,22 @@ public class CTexto implements Agente {
 				notificacion.setNueva_posicion(0);
 			}
 			this.abstraccion.setValor(notificacion.getNueva_posicion());
+			System.out.println("Nuevo valor: "+this.abstraccion.getValor());
 			Enviar(notificacion,this.supervisor);
 		}else{
+			System.out.println("Pocision no valida");
 			this.presentacion.setText(String.valueOf(this.abstraccion.getValor()));
 		}
+		System.out.println("");
 	}
 	private void Posicionar_Bloque(int nueva_posicion) {
-		if((this.abstraccion.getMinimo()<=nueva_posicion)&&(nueva_posicion<=this.abstraccion.getMaximo())){
+		System.out.println("Tratando de pocisionar Texot: "+this);
+		if(this.abstraccion.isValorCorrecto(nueva_posicion)){
+			this.abstraccion.setValor(nueva_posicion);
 			this.presentacion.setText(String.valueOf(nueva_posicion));
+			System.out.println("Nuevo Valor: "+this.abstraccion.getValor());
 		}
+		System.out.println("");
 	}
 	private void Posicionar_Track(int nueva_posicion) {
 		Posicionar_Bloque(nueva_posicion);
@@ -79,7 +93,7 @@ public class CTexto implements Agente {
 			case Notificacion.INCREMENTAR_BLOQUE:Posicionar_Bloque(notificacion.getNueva_posicion());break;
 			case Notificacion.DECREMENTAR_BLOQUE:Posicionar_Bloque(notificacion.getNueva_posicion());break;
 			case Notificacion.TRACK:Posicionar_Track(notificacion.getNueva_posicion());break;
-			default:break;
+			default:System.out.println("Notificacion desconocida");break;
 		}
 	}
 	public void Recibir_Evento(KeyEvent accion){
@@ -87,7 +101,7 @@ public class CTexto implements Agente {
 	}
 	private boolean Validar_Pocisionar() {
 		if(!presentacion.getText().equals("")){
-			return (this.abstraccion.getMinimo()<=Integer.valueOf(this.presentacion.getText()))&&(Integer.valueOf(this.presentacion.getText())<this.abstraccion.getMaximo());
+			return this.abstraccion.isValorCorrecto(Integer.valueOf(presentacion.getText()));
 		}else{
 			return true;
 		}

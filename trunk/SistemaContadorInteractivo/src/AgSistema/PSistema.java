@@ -46,11 +46,11 @@ public class PSistema extends javax.swing.JFrame {
 				lienzo = new JPanel();
 				getContentPane().add(lienzo, BorderLayout.NORTH);
 				lienzo.setLayout(null);
-				lienzo.setPreferredSize(new java.awt.Dimension(390, 270));
+				lienzo.setPreferredSize(new java.awt.Dimension(406, 298));
 				lienzo.setBackground(new java.awt.Color(173,216,230));
 			}
 			pack();
-			this.setSize(406, 298);
+			this.setSize(406, 329);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();

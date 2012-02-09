@@ -1,6 +1,9 @@
 package AgScrollbar;
 
 import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+
+import javax.print.attribute.standard.PresentationDirection;
 
 import Recurso.Agente;
 import Recurso.Notificacion;
@@ -43,10 +46,15 @@ public class CScrollbar implements Agente{
 	 * 
 	 */
 	private void Decrementar() {
+		System.out.println("Tratando de decrementar en Scrolll: "+ this);
 		if (abstracion.esDecrementable()){
-			this.dibujo.setValue(this.getAbstracion().getValor()-1);
 			this.abstracion.decrementar();
+			this.dibujo.setValue(this.abstracion.getValor());
+			System.out.println("Nuevo valor: "+this.abstracion.getValor());
+		}else{
+			System.out.println("No se pudo decrementar");
 		}
+		System.out.println("");
 	}
 	/**
 	 * Metodod abstracto que permite al agente enviar notificaciones de cambio
@@ -94,21 +102,32 @@ public class CScrollbar implements Agente{
 	}
 	/**
 	 * 
-	 * @return
+	 * @return presentacion del agente
 	 */
 	public PScrollbar getDibujo() {
 		return dibujo;
 	}
 
 	private void Incrementar() {
+		System.out.println("Tratando de Incrementar en Scroll: "+this );
 		if (abstracion.esIncrementable()){
-			this.dibujo.setValue(this.getAbstracion().getValor()+1);
 			this.abstracion.incrementar();
+			this.dibujo.setValue(this.abstracion.getValor());
+			System.out.println("Nuevo Valor: "+this.abstracion.getValor());
+		}else{
+			System.out.println("No se puede incrementar");
 		}
+		System.out.println("");
 	}
 
 	private void Posicione(int nueva_posicion) {
-		this.dibujo.setValue(nueva_posicion);
+		System.out.println("Tratando de Pocisionar en Scroll: "+this);
+		if (this.abstracion.isValorCorrecto(nueva_posicion)){
+			this.abstracion.setValor(nueva_posicion);
+			this.dibujo.setValue(nueva_posicion);
+			System.out.println("Nuevo Valor: "+this.abstracion.getValor());
+		}
+		System.out.println("");
 	}
 
 	@Override
@@ -126,10 +145,21 @@ public class CScrollbar implements Agente{
 		}
 	}
 
-	public void Recibir_Evento(AdjustmentEvent accion){
-		EnviarAccion(accion);
+	public void Recibir_Evento(AdjustmentEvent evento){
+		Procesar_Evento(evento);
+		EnviarAccion(evento);
 	}
 
+	private void Procesar_Evento(AdjustmentEvent evento) {
+		switch (evento.getAdjustmentType()) {
+			case AdjustmentEvent.UNIT_INCREMENT: Incrementar();break;
+			case AdjustmentEvent.UNIT_DECREMENT: Decrementar();break;
+			case AdjustmentEvent.BLOCK_DECREMENT: Posicione(this.dibujo.getValue()); break;
+			case AdjustmentEvent.BLOCK_INCREMENT: Posicione(this.dibujo.getValue());break;
+			case AdjustmentEvent.TRACK : Posicione(this.dibujo.getValue());break;
+			default: System.out.println("Evento desconocido");break;
+		}
+	}
 	public void setAbstracion(AScrollbar abstracion) {
 		this.abstracion = abstracion;
 	}
