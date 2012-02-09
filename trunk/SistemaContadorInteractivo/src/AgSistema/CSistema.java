@@ -52,9 +52,9 @@ public class CSistema implements Agente{
 		presentacion.getLienzo().add(texto.getPresentacion());
 		texto.getPresentacion().setBounds(10, 70, scrollbar.getDibujo().getWidth(), 100);
 		presentacion.getLienzo().add(boton_incrementar.getPresentacion());
-		boton_incrementar.getPresentacion().setBounds(10, texto.getPresentacion().getHeight()+80, 100, 100);
+		boton_incrementar.getPresentacion().setBounds(10, texto.getPresentacion().getHeight()+80, 155, 100);
 		presentacion.getLienzo().add(boton_decrementar.getPresentacion());
-		boton_decrementar.getPresentacion().setBounds(this.boton_incrementar.getPresentacion().getWidth()+20, this.boton_incrementar.getPresentacion().getY(), 100, 100);
+		boton_decrementar.getPresentacion().setBounds(this.boton_incrementar.getPresentacion().getWidth()+20, this.boton_incrementar.getPresentacion().getY(), 155, 100);
 	}
 
 	private void Comunicar_Cambios(Agente emisor,Notificacion notificacion) {
