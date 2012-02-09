@@ -13,7 +13,7 @@ import java.awt.event.AdjustmentListener;
 public class PScrollbar extends Scrollbar{
 	private CScrollbar controlador;
 	public PScrollbar(AScrollbar abstraccion,CScrollbar controlador){
-		super(HORIZONTAL, abstraccion.getValor(), 1, abstraccion.getMinimo(),abstraccion.getMaximo());
+		super(HORIZONTAL, abstraccion.getValor(), 1, abstraccion.getMinimo(),abstraccion.getMaximo()+1);
 		this.controlador=controlador;
 		this.setBackground(Color.WHITE);
 		this.addAdjustmentListener(new AdjustmentListener() {

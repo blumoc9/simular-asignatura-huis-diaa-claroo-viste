@@ -7,6 +7,8 @@ package AgSistema;
 
 import java.awt.Scrollbar;
 import java.util.Vector;
+
+import AgBoton.CBoton;
 import AgScrollbar.CScrollbar;
 import AgTexto.CTexto;
 import Recurso.Agente;
@@ -19,6 +21,8 @@ public class CSistema implements Agente{
 	private CScrollbar scrollbar;
 	private CScrollbar scrollbar2;
 	private CTexto texto;
+	private CBoton boton_incrementar;
+	private CBoton boton_decrementar;
 	
 	public CSistema() {
 		super();
@@ -33,27 +37,37 @@ public class CSistema implements Agente{
 		scrollbar = new CScrollbar(10, 20, 0,this);
 		scrollbar2 = new CScrollbar(10, 20, 0,this);
 		texto = new CTexto(0, 10, 20, this);
+		boton_incrementar = new CBoton(0, 10, 20, CBoton.BOTON_INCREMENTO, this);
+		boton_decrementar = new CBoton(0, 10, 20, CBoton.BOTON_DECREMENTO, this);
 		this.subordinados.add(scrollbar);
 		this.subordinados.add(scrollbar2);
 		this.subordinados.add(texto);
+		this.subordinados.add(boton_incrementar);
+		this.subordinados.add(boton_decrementar);
 		presentacion.getLienzo().add(scrollbar.getDibujo());
 		scrollbar.getDibujo().setBounds(10, 10, this.getPresentacion().getLienzo().getWidth()-80, 50);
 		presentacion.getLienzo().add(scrollbar2.getDibujo());
 		scrollbar2.getDibujo().setOrientation(Scrollbar.VERTICAL);
 		scrollbar2.getDibujo().setBounds(this.getPresentacion().getLienzo().getWidth()-60, 10, 50, this.getPresentacion().getLienzo().getHeight()-20);
 		presentacion.getLienzo().add(texto.getPresentacion());
-		texto.getPresentacion().setBounds(10, 70, scrollbar.getDibujo().getWidth(), scrollbar2.getDibujo().getHeight()-60);
+		texto.getPresentacion().setBounds(10, 70, scrollbar.getDibujo().getWidth(), 100);
+		presentacion.getLienzo().add(boton_incrementar.getPresentacion());
+		boton_incrementar.getPresentacion().setBounds(10, texto.getPresentacion().getHeight()+80, 100, 100);
+		presentacion.getLienzo().add(boton_decrementar.getPresentacion());
+		boton_decrementar.getPresentacion().setBounds(this.boton_incrementar.getPresentacion().getWidth()+20, this.boton_incrementar.getPresentacion().getY(), 100, 100);
 	}
 
-	private void Comunicar_Cambios(Agente agente,Notificacion notificacion) {
+	private void Comunicar_Cambios(Agente emisor,Notificacion notificacion) {
 		for(int i=0;i<this.subordinados.size();i++){
-			Enviar(notificacion,this.subordinados.get(i));
+			if(emisor!=this.subordinados.get(i)){
+				Enviar(notificacion,this.subordinados.get(i));
+			}
 		}
 	}
 
 	@Override
 	public void Enviar(Notificacion notificacion,Agente receptor) {
-		receptor.Recibir(notificacion,this );
+		receptor.Recibir(notificacion,this);
 	}
 
 	public ASistema getAbstraccion() {
